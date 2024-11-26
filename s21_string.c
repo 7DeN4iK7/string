@@ -10,17 +10,14 @@ char *s21_strncat(char *dest, const char *src, size_t n);
 char *s21_strchr(const char *str, int c);
 int s21_strncmp(const char *str1, const char *str2, size_t n);
 char *s21_strncpy(char *dest, const char *src, size_t n);
+size_t s21_strcspn(const char *str1, const char *str2);
+size_t s21_strlen(const char* str);
 
 int main() {
 
-    char str1[15] = "catpopa";
-    char str2[30] = "catpopa";
+    printf("%d", s21_strcspn("popa", "bfa"));
 
-    int rez = s21_strncmp(str1, str2, 20);
-
-    printf("%d - %d", strncmp(str1, str2, 20), s21_strncmp(str1, str2, 20));
-
-   return 0;
+    return 0;
 }
 
 void *s21_memchr(const void *str, int c, size_t n) {
@@ -95,4 +92,25 @@ char *s21_strncpy(char *dest, const char *src, size_t n) {
         *(dest++) = *(src++);
     }
     return dest;
+}
+
+size_t s21_strcspn(const char *str1, const char *str2) {
+    size_t len = s21_strlen(str2);
+    size_t max = s21_strlen(str1);
+    for(int i = 0; i < len; i++) {
+        char *find = s21_strchr(str1, str2[i]);
+        if(find != NULL) {
+            int offset = find - str1;
+            if(offset < max)
+                max = offset;
+        }
+    }
+
+    return max;
+}
+
+size_t s21_strlen(const char* str) {
+    char *ptr = (char*)str;
+    while(*ptr != '\0') ptr++;
+    return ptr - str;
 }
