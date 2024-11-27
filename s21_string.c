@@ -1,6 +1,7 @@
 //#include <string.h>
 #include <stdio.h>
 #include "s21_string.h"
+#include <stdarg.h>
 
 void *s21_memchr(const void *str, int c, size_t n);
 int s21_memcmp(const void *str1, const void *str2, size_t n);
@@ -18,21 +19,36 @@ char *s21_strrchr(const char *str, int c);
 char *s21_strstr(const char *haystack, const char *needle);
 char *s21_strtok(char *str, const char *delim);
 
-int main() {
+int s21_sscanf(const char *str, const char *format, ...);
+int s21_sprintf(char *str, const char *format, ...);
 
-    char string[] = "Hope you are doing fine";
-    char *delimiter = " ";
-    char *token;
-
-    printf("%s\n", string);
-
-    token = s21_strtok(string, delimiter);
-    while(token != S21_NULL) {
-        printf("%s\n", token);
-        token = s21_strtok(S21_NULL, delimiter);
+int s21_sscanf(const char *str, const char *format, ...) {
+    va_list args;
+    int n = 3;
+    va_start(args, n);
+    for(int i = 0; i < n; i++) {
+        printf("%d", va_arg(args, int));
     }
 
-    printf("%s\n", string);
+    va_end(args);
+}
+
+int main() {
+
+    // char string[] = "Hope you are doing fine";
+    // char *delimiter = " ";
+    // char *token;
+
+    // printf("%s\n", string);
+
+    // token = s21_strtok(string, delimiter);
+    // while(token != S21_NULL) {
+    //     printf("%s\n", token);
+    //     token = s21_strtok(S21_NULL, delimiter);
+    // }
+
+    // printf("%s\n", string);
+    s21_sscanf("a", "b", 3, 5);
 
     return 0;
 }
@@ -164,23 +180,20 @@ char *s21_strstr(const char *haystack, const char *needle) {
 char *s21_strtok(char *str, const char *delim) {
     static char *old;
     char *find = S21_NULL;
-    printf("AAA\t");
     if(str == S21_NULL)
         str = old;
     if(str != S21_NULL)
     {
         find = str;
         str += s21_strcspn(str, delim);
-    } else {
-        printf("END");
-    }
-    if(*str != '\0')
-    {
-        *str = '\0';
-        old = str + 1;
-    } else
-    {
-        old = S21_NULL;
+        if(*str != '\0')
+        {
+            *str = '\0';
+            old = str + 1;
+        } else
+        {
+            old = S21_NULL;
+        }
     }
     return find;
 
