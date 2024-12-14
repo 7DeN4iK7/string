@@ -19,9 +19,9 @@ char *s21_strrchr(const char *str, int c);
 char *s21_strstr(const char *haystack, const char *needle);
 char *s21_strtok(char *str, const char *delim);
 
-char *itos(char *res, long long int num, int accuracy);
-char *reversed_digit(char *res, long long int num, int accuracy);
-int add_digit(char *res, long num, int offset, int base);
+char *itos(char *res, long double num, int accuracy);
+char *reversed_digit(char *res, long double num, int accuracy);
+int add_digit(char *res, long double num, int offset, int base);
 char *ftos(char *res, long double num, int accuracy, int is_long, int need_dot);
 
 typedef long unsigned int size_t;

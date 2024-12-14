@@ -114,7 +114,7 @@ typedef struct {
     int reading_lenght;
 } specification_read;
 
-int integer_number(char *str, specification_read spec_read, long long int num) {
+int integer_number(char *str, specification_read spec_read, long double num) {
     itos(str, num, spec_read.accuracy);
     return s21_strlen(str);
 }
@@ -606,7 +606,7 @@ char *ftos(char *res, long double num, int accuracy, int is_long, int need_dot) 
     return res;
 }
 
-char *itos(char *str, long long int num, int accuracy) {
+char *itos(char *str, long double num, int accuracy) {
     reversed_digit(str, num, accuracy);
 
     reverse_str(str);
@@ -615,13 +615,15 @@ char *itos(char *str, long long int num, int accuracy) {
     return str;
 }
 
-char *reversed_digit(char *str, long long int num, int accuracy) {
+char *reversed_digit(char *str, long double num, int accuracy) {
     int i = 0;
+    if(num == 0)
+        str[i++] = '0';
     if(num < 0) {
         num *= -1;
     }
-    while (num) {
-        str[i++] = (num % 10) + '0'; 
+    while ((long long int)num) {
+        str[i++] = ((long long int)num % 10) + '0'; 
         num = num / 10; 
     }
     int zeros_count = accuracy - i;
@@ -721,7 +723,7 @@ char *s21_strncat(char *dest, const char *src, size_t n) {
         ptr[i] = src[i];
     }
     ptr[i] = '\0';
-    return ptr;
+    return dest;
 }
 
 char *s21_strchr(const char *str, int c) {

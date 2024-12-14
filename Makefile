@@ -12,7 +12,7 @@ s21_string.a:
 run_test:
 	rm -rf test
 	@make test
-	
+
 test: s21_string.a
 	$(CC) test.c s21_string.c -lm -lcheck -lsubunit -o test
 	./test
