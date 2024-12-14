@@ -21,7 +21,9 @@ char *s21_strtok(char *str, const char *delim);
 
 char *itos(char *res, long double num, int accuracy);
 char *reversed_digit(char *res, long double num, int accuracy);
-int add_digit(char *res, long double num, int offset, int base);
+int add_digit(char *res, long num, int offset, int base);
+char *ftos(char *res, long double num, int accuracy, int is_long, int need_dot);
+
 char *ftos(char *res, long double num, int accuracy, int is_long, int need_dot);
 
 typedef long unsigned int size_t;
