@@ -3,9 +3,6 @@
 #include "s21_string.h"
 #include <stdarg.h>
 
-int add_digit(char *res, long num, int offset, int base);
-char *ftos(char *res, long double num, int accuracy, int is_long, int need_dot);
-
 int s21_sscanf(const char *str, const char *format, ...);
 int s21_sprintf(char *str, const char *format, ...);
 
@@ -279,7 +276,7 @@ int science_number(char *str, specification_read spec_read, long double num) {
 
 int digit_specificator(char *str, specification_read spec_read, long double num) {
     char *ptr = str;
-    char num_str[64] = {0};
+    char num_str[124] = {0};
     int num_len = 0;
     if(spec_read.spec == 'f')
     {
