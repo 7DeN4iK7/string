@@ -1,9 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <check.h>
 #include <math.h>
-#include "s21_string.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
+#include "s21_string.h"
 
 START_TEST(s21_strncat_1) {
   char s21_str[6] = "abc";
@@ -126,13 +127,32 @@ START_TEST(s21_memcpy_3) {
 }
 END_TEST
 
+// char s21_str[6] = "abc";
+// char str[6] = "abc";
+// char cat[3] = "def";
+// int n = 5;
+// char *s21_res = s21_strncat(s21_str, cat, n);
+// char *res = strncat(str, cat, n);
+// ck_assert_str_eq(s21_res, res);
+
+START_TEST(s21_strtok) {
+  char s21[6] = "ababab";
+  char orig[6] = "ababab";
+  char del_s21 = "a";
+  char del_orig = "a";
+  char *s21_res = s21_strtok(s21, del_s21);
+  char *res = strtok(orig, del_orig);
+  ck_assert_str_eq(s21_res, res);
+}
+END_TEST
+
 int main(void) {
   Suite *s1 = suite_create("Core");
   TCase *tc1_1 = tcase_create("Core");
   SRunner *sr = srunner_create(s1);
   int nf;
   suite_add_tcase(s1, tc1_1);
-  //tcase_add_test(tc1_1, s21_strncat_1);
+  // tcase_add_test(tc1_1, s21_strncat_1);
   tcase_add_test(tc1_1, s21_strncat_2);
   tcase_add_test(tc1_1, s21_memchr_1);
   tcase_add_test(tc1_1, s21_memchr_2);
@@ -142,8 +162,8 @@ int main(void) {
   tcase_add_test(tc1_1, s21_memcmp_3);
   tcase_add_test(tc1_1, s21_memcmp_4);
   tcase_add_test(tc1_1, s21_memcpy_1);
-  //tcase_add_test(tc1_1, s21_memcpy_2);
-  //tcase_add_test(tc1_1, s21_memcpy_3);
+  // tcase_add_test(tc1_1, s21_memcpy_2);
+  // tcase_add_test(tc1_1, s21_memcpy_3);
 
   srunner_set_fork_status(sr, CK_NOFORK);
   srunner_run_all(sr, CK_ENV);
