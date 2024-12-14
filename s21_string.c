@@ -655,25 +655,25 @@ int s21_sprintf(char *str, const char *format, ...) {
     return str - start;
 }
 
-int main() {
-    char res[1024] = {0};
-    char real_res1[1024] = {0};
+// int main() {
+//     char res[1024] = {0};
+//     char real_res1[1024] = {0};
 
-    // const char *format1 = "format:%.4g %.4g %.4g %.4g %.4g\n %.4g %.4g %.4g %.4g %.4g %.4g %.4g %.4g %.4g";
-    // int rez =         s21_sprintf(res, format1, 5555555.5555555, 555555.555555, 5555.55555, 55.55555555, 555.55555555, 0.55555555, 0.055555555, 0.0055555555, 0.00055555555, 0.000055555555, 0.00000055555555);
-    // int real_rez1 = sprintf(real_res1, format1, 5555555.5555555, 555555.555555, 5555.55555, 55.55555555, 555.55555555, 0.55555555, 0.055555555, 0.0055555555, 0.00055555555, 0.000055555555, 0.00000055555555);
+//     // const char *format1 = "format:%.4g %.4g %.4g %.4g %.4g\n %.4g %.4g %.4g %.4g %.4g %.4g %.4g %.4g %.4g";
+//     // int rez =         s21_sprintf(res, format1, 5555555.5555555, 555555.555555, 5555.55555, 55.55555555, 555.55555555, 0.55555555, 0.055555555, 0.0055555555, 0.00055555555, 0.000055555555, 0.00000055555555);
+//     // int real_rez1 = sprintf(real_res1, format1, 5555555.5555555, 555555.555555, 5555.55555, 55.55555555, 555.55555555, 0.55555555, 0.055555555, 0.0055555555, 0.00055555555, 0.000055555555, 0.00000055555555);
 
-    const char *format1 = "format:%.2e.";
-    int rez = s21_sprintf(res, format1, 1.18973e+435);
+//     const char *format1 = "format:%hhd.";
+//     int rez = s21_sprintf(res, format1, -256);
 
-    int real_rez1 = sprintf(real_res1, format1, 1.18973e+435);
+//     int real_rez1 = sprintf(real_res1, format1, -256);
 
 
-    printf("%d:%s\n", rez, res);
-    printf("%d:%s\n", real_rez1, real_res1);
+//     printf("%d:%s\n", rez, res);
+//     printf("%d:%s\n", real_rez1, real_res1);
 
-    return 0;
-}
+//     return 0;
+// }
 
 void *s21_memchr(const void *str, int c, size_t n) {
     const unsigned char *ptr = str;
@@ -714,13 +714,14 @@ void *s21_memset(void *str, int c, size_t n) {
 }
 
 char *s21_strncat(char *dest, const char *src, size_t n) {
-    while(*dest != '\0') dest++;
+    char *ptr = dest;
+    while(*ptr != '\0') ptr++;
     size_t i = 0;
     for(; i < n && src[i] != '\0'; i++) {
-        dest[i] = src[i];
+        ptr[i] = src[i];
     }
-    dest[i] = '\0';
-    return dest;
+    ptr[i] = '\0';
+    return ptr;
 }
 
 char *s21_strchr(const char *str, int c) {
