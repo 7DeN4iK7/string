@@ -1,9 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <check.h>
 #include <math.h>
-#include "s21_string.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
+#include "s21_string.h"
 
 START_TEST(s21_strncat_1) {
   char s21_str[10] = "abc";
@@ -169,7 +170,8 @@ START_TEST(s21_sprintf_d4) {
 START_TEST(s21_sprintf_d5) {
   char s21_str[1024] = {0};
   char str[1024] = {0};
-  const char *format = "test: %0-+ #10.3d %0-+ #10.3hd %0-+ #10.3hhd %0-+ #10.3ld %0-+ #10.3lld";
+  const char *format =
+      "test: %0-+ #10.3d %0-+ #10.3hd %0-+ #10.3hhd %0-+ #10.3ld %0-+ #10.3lld";
   int s21_res = s21_sprintf(s21_str, format, -1, -1, -1, -1, -1);
   int res = sprintf(str, format, -1, -1, -1, -1, -1);
   ck_assert_int_eq(s21_res, res);
@@ -195,7 +197,6 @@ START_TEST(s21_sprintf_f2) {
   ck_assert_int_eq(s21_res, res);
   ck_assert_str_eq(s21_str, str);
 }
-
 
 START_TEST(s21_sprintf_f3) {
   char s21_str[1024] = {0};
@@ -248,8 +249,6 @@ START_TEST(s21_strchr_1) {
 }
 END_TEST
 
-
-
 // START_TEST(s21_strncat_1) {
 //   char str1[6] = "piskaa";
 //   char str2[6] = "popkaa";
@@ -267,6 +266,61 @@ END_TEST
 //   char *s21_res = s21_strncat(str1, str2, n);
 //   char *res = strncat(str1, str2, n);
 //   ck_assert_ptr_eq(s21_res, res);
+// }
+// END_TEST
+
+START_TEST(s21_strcspn) {
+  char s21_str1[6] = "abcdef";
+  char s21_str2[3] = "edc";
+  char str1[6] = "abcdef";
+  char str2[3] = "edc";
+  size_t s21_res = s21_strcspn(s21_str1, s21_str2);
+  size_t res = strcspn(str1, str2);
+  ck_assert_str_eq(s21_res, res);
+}
+END_TEST
+
+START_TEST(s21_strpbrk) {
+  char s21_str1[6] = "abcdef";
+  char str1[6] = "abcdef";
+  char str2[2] = "ld";
+  char *s21_res = s21_strpbrk(s21_str1, str2);
+  char *res = strpbrk(str1, str2);
+  ck_assert_str_eq(s21_res, res);
+}
+END_TEST
+
+START_TEST(s21_strlen) {
+  char s21_str[6] = "aaaaaa";
+  char str[6] = "aaaaaa";  // надо ли здесь вторую вообще
+  size_t s21_res = s21_strlen(s21_str);
+  size_t res = strlen(str);
+  ck_assert_int_eq(s21_res, res);
+}
+END_TEST
+
+START_TEST(s21_strchr) {
+  char s21_str[6] = "aaaaaa";
+  char str[6] = "aaaaaa";
+  int c = 96;
+  char *s21_res = s21_strchr(s21_str, c);
+  char *res = strchr(str, c);
+  ck_assert_str_eq(s21_res, res);
+}
+END_TEST
+
+START_TEST(s21_strstr) {
+  char s21_haystack[6] = "abcdef";
+  char haystack[6] = "abcdef";
+  char needle[3] = "bcd";
+  char *s21_res = s21_strstr(s21_haystack, needle);
+  char *res = strstr(haystack, needle);
+  ck_assert_str_eq(s21_res, res);
+}
+END_TEST
+
+// START_TEST(s21){
+//   ck_assert_str_eq(s21_res, res);
 // }
 // END_TEST
 
@@ -290,8 +344,8 @@ int main(void) {
   tcase_add_test(tc1_1, s21_memcpy_3);
   tcase_add_test(tc1_1, s21_memset_1);
   tcase_add_test(tc1_1, s21_memset_2);
-  //tcase_add_test(tc1_1, s21_strncat_1);
-  //SPRINTF
+  // tcase_add_test(tc1_1, s21_strncat_1);
+  // SPRINTF
   tcase_add_test(tc1_1, s21_sprintf_d1);
   tcase_add_test(tc1_1, s21_sprintf_d2);
   tcase_add_test(tc1_1, s21_sprintf_d3);
