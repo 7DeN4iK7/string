@@ -276,7 +276,7 @@ START_TEST(s21_strcspn) {
   char str2[3] = "edc";
   size_t s21_res = s21_strcspn(s21_str1, s21_str2);
   size_t res = strcspn(str1, str2);
-  ck_assert_str_eq(s21_res, res);
+  ck_assert_int_eq(s21_res, res);
 }
 END_TEST
 
