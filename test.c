@@ -1,9 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <check.h>
 #include <math.h>
-#include "s21_string.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
+#include "s21_string.h"
 
 START_TEST(s21_strncat_1) {
   char s21_str[10] = "abc";
@@ -169,7 +170,8 @@ START_TEST(s21_sprintf_d4) {
 START_TEST(s21_sprintf_d5) {
   char s21_str[1024] = {0};
   char str[1024] = {0};
-  const char *format = "test: %0-+ #10.3d %0-+ #10.3hd %0-+ #10.3hhd %0-+ #10.3ld %0-+ #10.3lld";
+  const char *format =
+      "test: %0-+ #10.3d %0-+ #10.3hd %0-+ #10.3hhd %0-+ #10.3ld %0-+ #10.3lld";
   int s21_res = s21_sprintf(s21_str, format, -1, -1, -1, -1, -1);
   int res = sprintf(str, format, -1, -1, -1, -1, -1);
   ck_assert_int_eq(s21_res, res);
@@ -195,7 +197,6 @@ START_TEST(s21_sprintf_f2) {
   ck_assert_int_eq(s21_res, res);
   ck_assert_str_eq(s21_str, str);
 }
-
 
 START_TEST(s21_sprintf_f3) {
   char s21_str[1024] = {0};
@@ -414,7 +415,29 @@ START_TEST(s21_strchr_1) {
 }
 END_TEST
 
-int main() {
+
+
+// START_TEST(s21_strncat_1) {
+//   char str1[6] = "piskaa";
+//   char str2[6] = "popkaa";
+//   int n = 1;
+//   char *s21_res = s21_strncat(str1, str2, n);
+//   char *res = strncat(str1, str2, n);
+//   ck_assert_ptr_eq(s21_res, res);
+// }
+// END_TEST
+
+// START_TEST(s21_strncat_2) {
+//   char str1[0] = "";
+//   char str2[6] = "popkaa";
+//   int n = 1;
+//   char *s21_res = s21_strncat(str1, str2, n);
+//   char *res = strncat(str1, str2, n);
+//   ck_assert_ptr_eq(s21_res, res);
+// }
+// END_TEST
+
+int main(void) {
   Suite *s1 = suite_create("Core");
   TCase *tc1_1 = tcase_create("Core");
   SRunner *sr = srunner_create(s1);
@@ -434,8 +457,8 @@ int main() {
   tcase_add_test(tc1_1, s21_memcpy_3);
   tcase_add_test(tc1_1, s21_memset_1);
   tcase_add_test(tc1_1, s21_memset_2);
-  //tcase_add_test(tc1_1, s21_strncat_1);
-  //SPRINTF
+  // tcase_add_test(tc1_1, s21_strncat_1);
+  // SPRINTF
   tcase_add_test(tc1_1, s21_sprintf_d1);
   tcase_add_test(tc1_1, s21_sprintf_d2);
   tcase_add_test(tc1_1, s21_sprintf_d3);
