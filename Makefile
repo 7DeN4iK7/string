@@ -18,10 +18,11 @@ test: s21_string.a
 	./test
 
 gcov_report: s21_string.a
-	#mkdir logs
+	@rm -rf logs
+	@mkdir logs
 	@$(CC) -fprofile-arcs -ftest-coverage s21_string.a test.c s21_string.c -o logs/gcov_report -lm -lcheck -lsubunit
-	# ./logs/gcov_report
-	# @echo "Building gcov report..."
-	# gcovr --html-details -o logs/report.html
-	# @echo "Building report..."
-	# @open logs/report.html
+	@./logs/gcov_report
+	@echo "Building gcov report..."
+	@gcovr --html-details -o logs/report.html
+	@echo "Building report..."
+	@open logs/report.html
