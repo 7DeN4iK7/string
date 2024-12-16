@@ -3,16 +3,10 @@
 #include "s21_string.h"
 #include <stdarg.h>
 
-int s21_sscanf(const char *str, const char *format, ...);
+//int s21_sscanf(const char *str, const char *format, ...);
 int s21_sprintf(char *str, const char *format, ...);
 
 int read_specificator(char *str, const char *format, int len, char specificator, va_list args, int current_len);
-// double max(double a, double b);
-// double min(double a, double b);
-
-// double max(double a, double b) {
-//     return a > b ? a : b;
-// }
 
 int is_negative(long double a) {
     return 1.0L / a < 0.0L;
@@ -20,10 +14,6 @@ int is_negative(long double a) {
 
 double my_abs(long double a) {
     return is_negative(a) ? -a : a;
-}
-
-double min(double a, double b) {
-    return a < b ? a : b;
 }
 
 long long int my_round(long double num) {
@@ -63,16 +53,16 @@ long double round_to_precision(long double value, int precision) {
     return (is_neg ? -1.0L : 1.0L) * rez;
 }
 
-int s21_sscanf(const char *str, const char *format, ...) {
-    va_list args;
-    // int n = 3;
-    // va_start(args, n);
-    // for(int i = 0; i < n; i++) {
-    //     printf("%d", va_arg(args, int));
-    // }
+// int s21_sscanf(const char *str, const char *format, ...) {
+//     va_list args;
+//     // int n = 3;
+//     // va_start(args, n);
+//     // for(int i = 0; i < n; i++) {
+//     //     printf("%d", va_arg(args, int));
+//     // }
 
-    // va_end(args);
-}
+//     // va_end(args);
+// }
 
 
 
@@ -92,6 +82,12 @@ typedef struct {
     int reading_acc;
     int reading_lenght;
 } specification_read;
+
+int unsigned_number(char *str, specification_read spec_read, long double num)
+{
+    utos(str, num, spec_read.accuracy);
+    return s21_strlen(str);
+}
 
 int integer_number(char *str, specification_read spec_read, long double num) {
     itos(str, num, spec_read.accuracy);
@@ -182,23 +178,23 @@ int count_significant(int so, int accuracy, long double num, int hash_flag) {
     return counter;
 }
 
-void find_significant_digit(int *so, int *io, int *eo, long double num) {
-    long double int_part;
-    long double frac_part = modfl(my_abs(num), &int_part) * 10;
-    *so = 0;
-    *io = *eo = integer_part_len(num);
-    if(int_part == 0) {
-        while((long long int)frac_part == 0) {
-            frac_part = frac_part * 10;
-            (*so)++;
-            (*eo)++;
-        }
-    }
-    while((long long int)frac_part != 0) {
-        frac_part = frac_part * 10 - (long long int)frac_part * 10;
-        (*eo)++;
-    }
-}
+// void find_significant_digit(int *so, int *io, int *eo, long double num) {
+//     long double int_part;
+//     long double frac_part = modfl(my_abs(num), &int_part) * 10;
+//     *so = 0;
+//     *io = *eo = integer_part_len(num);
+//     if(int_part == 0) {
+//         while((long long int)frac_part == 0) {
+//             frac_part = frac_part * 10;
+//             (*so)++;
+//             (*eo)++;
+//         }
+//     }
+//     while((long long int)frac_part != 0) {
+//         frac_part = frac_part * 10 - (long long int)frac_part * 10;
+//         (*eo)++;
+//     }
+// }
 
 // int find_significant_digit(long double num) {
 //     long double int_part;
@@ -305,9 +301,11 @@ int digit_specificator(char *str, specification_read spec_read, long double num)
         num_len = octal_number(num_str, spec_read, num);
     else if(spec_read.spec == 'x' || spec_read.spec == 'X')
         num_len = hexidecimal_number(num_str, spec_read, num, spec_read.spec == 'X');
+    else if(spec_read.spec == 'u')
+        num_len = unsigned_number(num_str, spec_read, num);
     else
         num_len = integer_number(num_str, spec_read, num);
-    
+
     char space = 0;
     if(spec_read.flag_minus)
         spec_read.flag_zero = 0;
@@ -489,7 +487,16 @@ int read_specificator(char *str, const char *format, int len, char specificator,
             spec_len += digit_specificator(spec_str, spec_read, va_arg(args, long long int));
             break;
         case 'x':
-            spec_len += digit_specificator(spec_str, spec_read, va_arg(args, long long int));
+            if(spec_read.flag_h == 1)
+                spec_len += digit_specificator(spec_str, spec_read, (short int)va_arg(args, long long int));
+            else if(spec_read.flag_h == 2)
+                spec_len += digit_specificator(spec_str, spec_read, (char)va_arg(args, long long int));
+            else if(spec_read.flag_l == 1)
+                spec_len += digit_specificator(spec_str, spec_read, (long int)va_arg(args, long long int));
+            else if(spec_read.flag_l == 2)
+                spec_len += digit_specificator(spec_str, spec_read, (long long int)va_arg(args, long long int));
+            else
+                spec_len += digit_specificator(spec_str, spec_read, va_arg(args, long long int));
             break;
         case 'X':
             spec_len += digit_specificator(spec_str, spec_read, va_arg(args, long long int));
@@ -585,7 +592,17 @@ char *ftos(char *res, long double num, int accuracy, int is_long, int need_dot) 
     return res;
 }
 
-char *itos(char *str, long double num, int accuracy) {
+char *utos(char *str, long long unsigned int num, int accuracy)
+{
+    reversed_unsigned_digit(str, num, accuracy);
+
+    reverse_str(str);
+    str[s21_strlen(str) + 1] = '\0'; 
+
+    return str;
+}
+
+char *itos(char *str, long long int num, int accuracy) {
     reversed_digit(str, num, accuracy);
 
     reverse_str(str);
@@ -594,7 +611,23 @@ char *itos(char *str, long double num, int accuracy) {
     return str;
 }
 
-char *reversed_digit(char *str, long double num, int accuracy) {
+char *reversed_unsigned_digit(char *str, long long unsigned int num, int accuracy)
+{
+    int i = 0;
+    if(num == 0)
+        str[i++] = '0';
+    while ((long long int)num) {
+        str[i++] = num % 10 + '0'; 
+        num = num / 10; 
+    }
+    int zeros_count = accuracy - i;
+    for(int j = 0; j < zeros_count; j++)
+        str[i++] = '0';
+
+    return str;
+}
+
+char *reversed_digit(char *str, long long int num, int accuracy) {
     int i = 0;
     if(num == 0)
         str[i++] = '0';
@@ -602,7 +635,7 @@ char *reversed_digit(char *str, long double num, int accuracy) {
         num *= -1;
     }
     while ((long long int)num) {
-        str[i++] = ((long long int)num % 10) + '0'; 
+        str[i++] = num % 10 + '0'; 
         num = num / 10; 
     }
     int zeros_count = accuracy - i;
@@ -644,10 +677,10 @@ int s21_sprintf(char *str, const char *format, ...) {
 //     // int rez =         s21_sprintf(res, format1, 5555555.5555555, 555555.555555, 5555.55555, 55.55555555, 555.55555555, 0.55555555, 0.055555555, 0.0055555555, 0.00055555555, 0.000055555555, 0.00000055555555);
 //     // int real_rez1 = sprintf(real_res1, format1, 5555555.5555555, 555555.555555, 5555.55555, 55.55555555, 555.55555555, 0.55555555, 0.055555555, 0.0055555555, 0.00055555555, 0.000055555555, 0.00000055555555);
 
-//     const char *format1 = "format:%hhd.";
-//     int rez = s21_sprintf(res, format1, -256);
+//     const char *format1 = "format:%x %hx %hhx %lx %lx %lx.";
+//     int rez = s21_sprintf(res, format1, 1, 65536, 258, (__INT_MAX__ + 1) - 1, (__INT_MAX__ + 1) - 1, (__INT_MAX__ + 1) - 1);
 
-//     int real_rez1 = sprintf(real_res1, format1, -256);
+//     int real_rez1 = sprintf(real_res1, format1, 1, 65536, 258, (__INT_MAX__ + 1) - 1, (__INT_MAX__ + 1) - 1, (__INT_MAX__ + 1) - 1);
 
 
 //     printf("%d:%s\n", rez, res);
