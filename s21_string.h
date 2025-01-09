@@ -30,7 +30,7 @@ char *ftos(char *res, long double num, int accuracy, int is_long, int need_dot);
 
 char *ftos(char *res, long double num, int accuracy, int is_long, int need_dot);
 
-typedef long unsigned int size_t;
+typedef long unsigned int s21_size_t;
 #define S21_NULL ((void*)0)
  
 #endif

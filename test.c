@@ -140,9 +140,9 @@ START_TEST(s21_sprintf_d1) {
 START_TEST(s21_sprintf_d2) {
   char s21_str[1024] = {0};
   char str[1024] = {0};
-  const char *format = "test: %d %hd %hhd %ld %lld";
-  int s21_res = s21_sprintf(s21_str, format, -1, -1, -1, -1, -1);
-  int res = sprintf(str, format, -1, -1, -1, -1, -1);
+  const char *format = "test: % d %hd %hhd %ld %lld";
+  int s21_res = s21_sprintf(s21_str, format, 1, -1, -1, -1, -1);
+  int res = sprintf(str, format, 1, -1, -1, -1, -1);
   ck_assert_int_eq(s21_res, res);
   ck_assert_str_eq(s21_str, str);
 }
@@ -292,8 +292,8 @@ START_TEST(s21_sprintf_g1) {
   char s21_str[1024] = {0};
   char str[1024] = {0};
   const char *format = "test: %g %hg %.1G %Lg %LG";
-  int s21_res = s21_sprintf(s21_str, format, 0.00001, 0.0000112345, 500.55, 1000000.0L, 699999999.0L);
-  int res = sprintf(str, format, 0.00001, 0.0000112345, 500.55, 1000000.0L, 699999999.0L);
+  int s21_res = s21_sprintf(s21_str, format, 0.002345, 0.00000112345, 500.55, 1000000.0L, 699999999.0L);
+  int res = sprintf(str, format, 0.002345, 0.00000112345, 500.55, 1000000.0L, 699999999.0L);
   ck_assert_int_eq(s21_res, res);
   ck_assert_str_eq(s21_str, str);
 }
@@ -405,13 +405,60 @@ START_TEST(s21_memset_2) {
 }
 END_TEST
 
+START_TEST(s21_strcspn_1) {
+  char s21_str1[6] = "abcdef";
+  char s21_str2[3] = "edc";
+  char str1[6] = "abcdef";
+  char str2[3] = "edc";
+  size_t s21_res = s21_strcspn(s21_str1, s21_str2);
+  size_t res = strcspn(str1, str2);
+  ck_assert_int_eq(s21_res, res);
+}
+END_TEST
+
+START_TEST(s21_strrchr_1) {
+  const char *str = "aabaabaa";
+  char find = 'b';
+  char *s21_res = s21_strrchr(str, find);
+  char *res = strrchr(str, find);
+  ck_assert_int_eq(s21_res, res);
+}
+END_TEST
+
+START_TEST(s21_strpbrk_1) {
+  const char *s21_str1 = "abcdef";
+  const char *str1 = "abcdef";
+  const char *str2 = "ld";
+  char *s21_res = s21_strpbrk(s21_str1, str2);
+  char *res = strpbrk(str1, str2);
+  ck_assert_str_eq(s21_res, res);
+}
+END_TEST
+
+START_TEST(s21_strlen_1) {
+  const char *str = "aaaaaa";
+  size_t s21_res = s21_strlen(str);
+  size_t res = strlen(str);
+  ck_assert_int_eq(s21_res, res);
+}
+END_TEST
+
 START_TEST(s21_strchr_1) {
-  const char str[6] = "piskaa";
-  int c = 45;
-  int n = 0;
-  char *s21_res = s21_memset(str, c, n);
-  char *res = memset(str, c, n);
-  ck_assert_ptr_eq(s21_res, res);
+  const char *str = "bbaaaa";
+  int c = 'a';
+  char *s21_res = s21_strchr(str, c);
+  char *res = strchr(str, c);
+  ck_assert_str_eq(s21_res, res);
+}
+END_TEST
+
+START_TEST(s21_strstr_1) {
+  const char *s21_haystack = "abcdef";
+  const char *haystack = "abcdef";
+  const char *needle = "bcd";
+  char *s21_res = s21_strstr(s21_haystack, needle);
+  char *res = strstr(haystack, needle);
+  ck_assert_str_eq(s21_res, res);
 }
 END_TEST
 
@@ -457,6 +504,13 @@ int main(void) {
   tcase_add_test(tc1_1, s21_memcpy_3);
   tcase_add_test(tc1_1, s21_memset_1);
   tcase_add_test(tc1_1, s21_memset_2);
+  tcase_add_test(tc1_1, s21_strstr_1);
+  tcase_add_test(tc1_1, s21_strchr_1);
+  tcase_add_test(tc1_1, s21_strlen_1);
+  tcase_add_test(tc1_1, s21_strpbrk_1);
+  tcase_add_test(tc1_1, s21_strcspn_1);
+  tcase_add_test(tc1_1, s21_strrchr_1);
+
   // tcase_add_test(tc1_1, s21_strncat_1);
   // SPRINTF
   tcase_add_test(tc1_1, s21_sprintf_d1);

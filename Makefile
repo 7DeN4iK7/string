@@ -20,7 +20,7 @@ test: s21_string.a
 gcov_report: s21_string.a
 	@rm -rf logs
 	@mkdir logs
-	@$(CC) -fprofile-arcs -ftest-coverage s21_string.a test.c s21_string.c -o logs/gcov_report -lm -lcheck -lsubunit
+	@$(CC) test.c -fprofile-arcs -ftest-coverage s21_string.c -o logs/gcov_report -lm -lcheck -lsubunit
 	@./logs/gcov_report
 	@echo "Building gcov report..."
 	@gcovr --html-details -o logs/report.html

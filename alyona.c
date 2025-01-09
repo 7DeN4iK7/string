@@ -8,17 +8,17 @@ void *insert(const char *src, const char *str, size_t start_index);
 void *trim(const char *src, const char *trim_chars);
 
 
-int main()
-{
-    char *str = "piskA";
-    char *src = "pi";
-    //char *new_line = insert(str, src, 2);
-    // printf("%s\n", new_line);
-    // printf("%p %p\n", str, new_line);
-    trim("  - /pipa  - /", " - /");
+// int main()
+// {
+//     char *str = "piskA";
+//     char *src = "pi";
+//     //char *new_line = insert(str, src, 2);
+//     // printf("%s\n", new_line);
+//     // printf("%p %p\n", str, new_line);
+//     trim("  - /pipa  - /", " - /");
 
-    return 0;
-}
+//     return 0;
+// }
 
 void *to_upper(const char *str)
 {

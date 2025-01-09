@@ -255,7 +255,7 @@ long double prepare_science(specification_read spec_read, long double num, int *
 int etos(char *str, specification_read spec_read, long double num, int e) {
     num = round_to_precision(num, spec_read.accuracy);
     ftos(str, num, spec_read.accuracy, spec_read.flag_L, spec_read.accuracy > 0 || spec_read.flag_hash);
-    size_t num_len = s21_strlen(str);
+    s21_size_t num_len = s21_strlen(str);
     char *ptr = str + num_len;
     *(ptr++) = spec_read.spec;
     *(ptr++) = e < 0 ? '-' : '+';
@@ -348,7 +348,7 @@ int digit_specificator(char *str, specification_read spec_read, long double num)
 }
 
 int s_specificator(char *str, specification_read spec_read, char *str2) {
-    size_t str_len = s21_strlen(str2);
+    s21_size_t str_len = s21_strlen(str2);
     if(spec_read.reading_acc) {
         str_len = spec_read.accuracy;
     }
@@ -394,7 +394,7 @@ void read_flag(char c, specification_read *spec_read, va_list args) {
                 spec_read->lenght = va_arg(args, long long int);
             }
         }
-        else if((c > '0' && c <= '9') ||  (c == '0' && (spec_read->reading_acc || spec_read->reading_lenght))) {
+        else if((c > '0' && c <= '9') || (c == '0' && (spec_read->reading_acc || spec_read->reading_lenght))) {
             if(spec_read->reading_acc) {
                 spec_read->accuracy *= 10;
                 spec_read->accuracy += c - '0';
@@ -406,7 +406,7 @@ void read_flag(char c, specification_read *spec_read, va_list args) {
         }
 }
 
-specification_read read_flags(int len, const char* format, va_list args) {
+specification_read read_flags(int len, const char* format, va_list args) {;
     specification_read spec_read = {0};
     for(int i = 0; i < len; i++) {
         read_flag(format[i], &spec_read, args);
@@ -475,7 +475,6 @@ int read_specificator(char *str, const char *format, int len, char specificator,
                 spec_len += digit_specificator(spec_str, spec_read, va_arg(args, double));
             break;
         case 'f':
-
             if(spec_read.accuracy == 0 && !spec_read.reading_acc)
                 spec_read.accuracy = 6;
             if(spec_read.flag_L)
@@ -575,10 +574,6 @@ char *ftos(char *res, long double num, int accuracy, int is_long, int need_dot) 
         pow *= 10;
 
     fpart = my_round(num * pow) % pow;
-    // if(is_long)
-    //     fpart = my_round(num * pow) % pow; 
-    // else
-    //     fpart = my_round((double)num * pow) % pow; 
  
     itos(ptr, ipart, 1);
     ptr += s21_strlen(ptr);
@@ -653,7 +648,7 @@ int s21_sprintf(char *str, const char *format, ...) {
     char *find = s21_strchr(format, '%');
     while (find != S21_NULL)
     {
-        size_t words_len = find - format;
+        s21_size_t words_len = find - format;
         s21_strncpy(str, format, words_len);
         str += words_len;
         format = find + 1;
@@ -663,7 +658,7 @@ int s21_sprintf(char *str, const char *format, ...) {
         find = s21_strchr(format, '%');
     }
     
-    size_t remained = s21_strlen(format);
+    s21_size_t remained = s21_strlen(format);
     s21_strncpy(str, format, remained);
     str += remained;
     return str - start;
@@ -677,11 +672,9 @@ int s21_sprintf(char *str, const char *format, ...) {
 //     // int rez =         s21_sprintf(res, format1, 5555555.5555555, 555555.555555, 5555.55555, 55.55555555, 555.55555555, 0.55555555, 0.055555555, 0.0055555555, 0.00055555555, 0.000055555555, 0.00000055555555);
 //     // int real_rez1 = sprintf(real_res1, format1, 5555555.5555555, 555555.555555, 5555.55555, 55.55555555, 555.55555555, 0.55555555, 0.055555555, 0.0055555555, 0.00055555555, 0.000055555555, 0.00000055555555);
 
-//     const char *format1 = "format:%x %hx %hhx %lx %lx %lx.";
-//     int rez = s21_sprintf(res, format1, 1, 65536, 258, (__INT_MAX__ + 1) - 1, (__INT_MAX__ + 1) - 1, (__INT_MAX__ + 1) - 1);
-
-//     int real_rez1 = sprintf(real_res1, format1, 1, 65536, 258, (__INT_MAX__ + 1) - 1, (__INT_MAX__ + 1) - 1, (__INT_MAX__ + 1) - 1);
-
+//     const char *format1 = "format:%.1f";
+//     int rez = s21_sprintf(res, format1, 10000.55);
+//     int real_rez1 = sprintf(real_res1, format1, 10000.55);
 
 //     printf("%d:%s\n", rez, res);
 //     printf("%d:%s\n", real_rez1, real_res1);
@@ -689,10 +682,10 @@ int s21_sprintf(char *str, const char *format, ...) {
 //     return 0;
 // }
 
-void *s21_memchr(const void *str, int c, size_t n) {
+void *s21_memchr(const void *str, int c, s21_size_t n) {
     const unsigned char *ptr = str;
     int find = 0;
-    for(size_t i = 0; i < n && !find; i++) {
+    for(s21_size_t i = 0; i < n && !find; i++) {
         int b = *(ptr++);
         if(b == c) {
             find = 1;
@@ -704,33 +697,33 @@ void *s21_memchr(const void *str, int c, size_t n) {
     return (void*)ptr;
 }
 
-int s21_memcmp(const void *str1, const void *str2, size_t n) {
+int s21_memcmp(const void *str1, const void *str2, s21_size_t n) {
     int rez = 0;
-    for(size_t i = 0; i < n && rez == 0; i++) {
+    for(s21_size_t i = 0; i < n && rez == 0; i++) {
         rez = *(unsigned char*)(str1 + i) - *(unsigned char*)(str2 + i);
     }
 
     return rez;
 }
 
-void *s21_memcpy(void *dest, const void *src, size_t n) {
-    for(size_t i = 0; i < n; i++) {
+void *s21_memcpy(void *dest, const void *src, s21_size_t n) {
+    for(s21_size_t i = 0; i < n; i++) {
         *(unsigned char*)(dest + i) = *(unsigned char*)(src + i);
     }
     return dest;
 }
 
-void *s21_memset(void *str, int c, size_t n) {
-    for(size_t i = 0; i < n; i++) {
+void *s21_memset(void *str, int c, s21_size_t n) {
+    for(s21_size_t i = 0; i < n; i++) {
         *(unsigned char*)(str + i) = c;
     }
     return str;
 }
 
-char *s21_strncat(char *dest, const char *src, size_t n) {
+char *s21_strncat(char *dest, const char *src, s21_size_t n) {
     char *ptr = dest;
     while(*ptr != '\0') ptr++;
-    size_t i = 0;
+    s21_size_t i = 0;
     for(; i < n && src[i] != '\0'; i++) {
         ptr[i] = src[i];
     }
@@ -748,25 +741,25 @@ char *s21_strchr(const char *str, int c) {
     return res;
 }
 
-int s21_strncmp(const char *str1, const char *str2, size_t n) {
+int s21_strncmp(const char *str1, const char *str2, s21_size_t n) {
     int rez = 0;
-    for(size_t i = 0; i < n && rez == 0 && *str1 != '\0' && *str2 != '\0'; i++) {
+    for(s21_size_t i = 0; i < n && rez == 0 && *str1 != '\0' && *str2 != '\0'; i++) {
         rez = *(str1++) - *(str2++);
     }
 
     return rez;
 }
 
-char *s21_strncpy(char *dest, const char *src, size_t n) {
-    for(size_t i = 0; i < n && *src != '\0'; i++) {
+char *s21_strncpy(char *dest, const char *src, s21_size_t n) {
+    for(s21_size_t i = 0; i < n && *src != '\0'; i++) {
         *(dest++) = *(src++);
     }
     return dest;
 }
 
-size_t s21_strcspn(const char *str1, const char *str2) {
+s21_size_t s21_strcspn(const char *str1, const char *str2) {
     char *find = s21_strpbrk(str1, str2);
-    size_t max = s21_strlen(str1);
+    s21_size_t max = s21_strlen(str1);
     if(find != S21_NULL)
         max = find - str1;
 
@@ -775,9 +768,9 @@ size_t s21_strcspn(const char *str1, const char *str2) {
 
 char *s21_strpbrk(const char *str1, const char *str2) {
     char *rez = S21_NULL;
-    size_t len = s21_strlen(str2);
+    s21_size_t len = s21_strlen(str2);
     while(*str1 != '\0' && rez == S21_NULL) {
-        for(size_t i = 0; i < len; i++) {
+        for(s21_size_t i = 0; i < len; i++) {
             if(*(str2 + i) == *str1)
                 rez = (char *)str1;
         }
@@ -786,7 +779,7 @@ char *s21_strpbrk(const char *str1, const char *str2) {
     return rez;
 }
 
-size_t s21_strlen(const char* str) {
+s21_size_t s21_strlen(const char* str) {
     char *ptr = (char*)str;
     while(*ptr != '\0') ptr++;
     return ptr - str;
@@ -805,7 +798,7 @@ char *s21_strrchr(const char *str, int c) {
 char *s21_strstr(const char *haystack, const char *needle) {
     char *res = S21_NULL;
     char *find = s21_strchr(haystack, *needle);
-    size_t len = s21_strlen(needle);
+    s21_size_t len = s21_strlen(needle);
     while(find != S21_NULL && res == S21_NULL) {
         if(s21_strncmp(find, needle, len) == 0)
             res = find;
