@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include "s21_string.h"
 
-void *to_upper(const char *str);
-void *to_lower(const char *str);
-void *insert(const char *src, const char *str, size_t start_index);
-void *trim(const char *src, const char *trim_chars);
+void *s21_to_upper(const char *str);
+void *s21_to_lower(const char *str);
+void *s21_insert(const char *src, const char *str, s21_size_t start_index);
+void *s21_trim(const char *src, const char *trim_chars);
 
 
 // int main()
@@ -20,7 +20,7 @@ void *trim(const char *src, const char *trim_chars);
 //     return 0;
 // }
 
-void *to_upper(const char *str)
+void *s21_to_upper(const char *str)
 {
     int str_len = s21_strlen(str);
     char *new_str = S21_NULL;
@@ -38,7 +38,7 @@ void *to_upper(const char *str)
     return new_str;
 }
 
-void *to_lower(const char *str)
+void *s21_to_lower(const char *str)
 {
     int str_len = s21_strlen(str);
     char *new_str = S21_NULL;
@@ -56,7 +56,7 @@ void *to_lower(const char *str)
     return new_str;
 }
 
-void *insert(const char *src, const char *str, size_t start_index)
+void *s21_insert(const char *src, const char *str, s21_size_t start_index)
 {   
     int str_len = s21_strlen(str);
     int src_len = s21_strlen(src);
@@ -72,7 +72,7 @@ void *insert(const char *src, const char *str, size_t start_index)
     return new_str;
 }
 
-void *trim(const char *src, const char *trim_chars)
+void *s21_trim(const char *src, const char *trim_chars)
 {
     int index = 0;
     int index_reverse = s21_strlen(src)-1;

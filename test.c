@@ -221,7 +221,8 @@ START_TEST(s21_sprintf_u1) {
 START_TEST(s21_sprintf_u2) {
   char s21_str[1024] = {0};
   char str[1024] = {0};
-  const char *format = "test: %0-+# 20.6u %0-+# 20.6hu %0-+# 20.6hhu %0-+# 20.6lu %0-+# 20.6llu";
+  const char *format =
+      "test: %0-+# 20.6u %0-+# 20.6hu %0-+# 20.6hhu %0-+# 20.6lu %0-+# 20.6llu";
   int s21_res = s21_sprintf(s21_str, format, 0, -1, -1, -1, -1);
   int res = sprintf(str, format, 0, -1, -1, -1, -1);
   ck_assert_int_eq(s21_res, res);
@@ -242,7 +243,8 @@ START_TEST(s21_sprintf_x2) {
   char s21_str[1024] = {0};
   char str[1024] = {0};
   const char *format = "test: %x %hx %hhx %lx %llx";
-  int s21_res = s21_sprintf(s21_str, format, 1000000, 1000000, 1000000, 1000000, 1000000);
+  int s21_res =
+      s21_sprintf(s21_str, format, 1000000, 1000000, 1000000, 1000000, 1000000);
   int res = sprintf(str, format, 1000000, 1000000, 1000000, 1000000, 1000000);
   ck_assert_int_eq(s21_res, res);
   ck_assert_str_eq(s21_str, str);
@@ -251,8 +253,10 @@ START_TEST(s21_sprintf_x2) {
 START_TEST(s21_sprintf_x3) {
   char s21_str[1024] = {0};
   char str[1024] = {0};
-  const char *format = "test: %-+0 #10.4X %-+0 #10.4hX %-+0 #10.4hhX %-+0 #10.4lX %-+0 #10.4llX";
-  int s21_res = s21_sprintf(s21_str, format, 1000000, 1000000, 1000000, 1000000, 1000000);
+  const char *format =
+      "test: %-+0 #10.4X %-+0 #10.4hX %-+0 #10.4hhX %-+0 #10.4lX %-+0 #10.4llX";
+  int s21_res =
+      s21_sprintf(s21_str, format, 1000000, 1000000, 1000000, 1000000, 1000000);
   int res = sprintf(str, format, 1000000, 1000000, 1000000, 1000000, 1000000);
   ck_assert_int_eq(s21_res, res);
   ck_assert_str_eq(s21_str, str);
@@ -261,8 +265,10 @@ START_TEST(s21_sprintf_x3) {
 START_TEST(s21_sprintf_i1) {
   char s21_str[1024] = {0};
   char str[1024] = {0};
-  const char *format = "test: %-+0 #10i %-+0 #10.4hi %-+0 #10.4hhi %-+0 #10.4li %-+0 #10.4lli";
-  int s21_res = s21_sprintf(s21_str, format, 1000000, 1000000, 1000000, 1000000, 1000000);
+  const char *format =
+      "test: %-+0 #10i %-+0 #10.4hi %-+0 #10.4hhi %-+0 #10.4li %-+0 #10.4lli";
+  int s21_res =
+      s21_sprintf(s21_str, format, 1000000, 1000000, 1000000, 1000000, 1000000);
   int res = sprintf(str, format, 1000000, 1000000, 1000000, 1000000, 1000000);
   ck_assert_int_eq(s21_res, res);
   ck_assert_str_eq(s21_str, str);
@@ -272,8 +278,10 @@ START_TEST(s21_sprintf_e1) {
   char s21_str[1024] = {0};
   char str[1024] = {0};
   const char *format = "test: %e %he %he %e %LE";
-  int s21_res = s21_sprintf(s21_str, format, 0.0, 1000000.0, 1000000.0, 1000000.0, 1000000.0L);
-  int res = sprintf(str, format, 0.0, 1000000.0, 1000000.0, 1000000.0, 1000000.0L);
+  int s21_res = s21_sprintf(s21_str, format, 0.0, 1000000.0, 1000000.0,
+                            1000000.0, 1000000.0L);
+  int res =
+      sprintf(str, format, 0.0, 1000000.0, 1000000.0, 1000000.0, 1000000.0L);
   ck_assert_int_eq(s21_res, res);
   ck_assert_str_eq(s21_str, str);
 }
@@ -281,9 +289,12 @@ START_TEST(s21_sprintf_e1) {
 START_TEST(s21_sprintf_e2) {
   char s21_str[1024] = {0};
   char str[1024] = {0};
-  const char *format = "test: %-+0 #10.4e %-+0 #10.4he %-+0 #10.4he %-+0 #10.4E %-+0 #10.4Le";
-  int s21_res = s21_sprintf(s21_str, format, 1.12345, 2.45367889, 2.45367889, 2.45367889, 2.45367889L);
-  int res = sprintf(str, format, 1.12345, 2.45367889, 2.45367889, 2.45367889, 2.45367889L);
+  const char *format =
+      "test: %-+0 #10.4e %-+0 #10.4he %-+0 #10.4he %-+0 #10.4E %-+0 #10.4Le";
+  int s21_res = s21_sprintf(s21_str, format, 1.12345, 2.45367889, 2.45367889,
+                            2.45367889, 2.45367889L);
+  int res = sprintf(str, format, 1.12345, 2.45367889, 2.45367889, 2.45367889,
+                    2.45367889L);
   ck_assert_int_eq(s21_res, res);
   ck_assert_str_eq(s21_str, str);
 }
@@ -292,8 +303,10 @@ START_TEST(s21_sprintf_g1) {
   char s21_str[1024] = {0};
   char str[1024] = {0};
   const char *format = "test: %g %hg %.1G %Lg %LG";
-  int s21_res = s21_sprintf(s21_str, format, 0.002345, 0.00000112345, 500.55, 1000000.0L, 699999999.0L);
-  int res = sprintf(str, format, 0.002345, 0.00000112345, 500.55, 1000000.0L, 699999999.0L);
+  int s21_res = s21_sprintf(s21_str, format, 0.002345, 0.00000112345, 500.55,
+                            1000000.0L, 699999999.0L);
+  int res = sprintf(str, format, 0.002345, 0.00000112345, 500.55, 1000000.0L,
+                    699999999.0L);
   ck_assert_int_eq(s21_res, res);
   ck_assert_str_eq(s21_str, str);
 }
@@ -312,8 +325,10 @@ START_TEST(s21_sprintf_s1) {
   char s21_str[1024] = {0};
   char str[1024] = {0};
   const char *format = "test: %s %-10.2hs % -30.6hhs %10.2ls %3.1lls";
-  int s21_res = s21_sprintf(s21_str, format, "privet", "privet", "privet", "privet", "privet");
-  int res = sprintf(str, format, "privet", "privet", "privet", "privet", "privet");
+  int s21_res = s21_sprintf(s21_str, format, "privet", "privet", "privet",
+                            "privet", "privet");
+  int res =
+      sprintf(str, format, "privet", "privet", "privet", "privet", "privet");
   ck_assert_int_eq(s21_res, res);
   ck_assert_str_eq(s21_str, str);
 }
@@ -373,15 +388,14 @@ START_TEST(s21_sprintf_percent) {
   ck_assert_str_eq(s21_str, str);
 }
 
-
 // START_TEST(s21_sprintf_g2) {
 //   char s21_str[1024] = {0};
 //   char str[1024] = {0};
-//   const char *format = "test: %-+0 #10.4e %-+0 #10.4he %-+0 #10.4hhe %-+0 #10.4lE %-+0 #10.4lle";
-//   int s21_res = s21_sprintf(s21_str, format, 1000000, 1000000, 1000000, 1000000, 1000000);
-//   int res = sprintf(str, format, 1000000, 1000000, 1000000, 1000000, 1000000);
-//   ck_assert_int_eq(s21_res, res);
-//   ck_assert_str_eq(s21_str, str);
+//   const char *format = "test: %-+0 #10.4e %-+0 #10.4he %-+0 #10.4hhe %-+0
+//   #10.4lE %-+0 #10.4lle"; int s21_res = s21_sprintf(s21_str, format, 1000000,
+//   1000000, 1000000, 1000000, 1000000); int res = sprintf(str, format,
+//   1000000, 1000000, 1000000, 1000000, 1000000); ck_assert_int_eq(s21_res,
+//   res); ck_assert_str_eq(s21_str, str);
 // }
 
 //------------------ALYONA------------------
@@ -462,8 +476,6 @@ START_TEST(s21_strstr_1) {
 }
 END_TEST
 
-
-
 // START_TEST(s21_strncat_1) {
 //   char str1[6] = "piskaa";
 //   char str2[6] = "popkaa";
@@ -536,7 +548,7 @@ int main(void) {
   tcase_add_test(tc1_1, s21_sprintf_c1);
   tcase_add_test(tc1_1, s21_sprintf_c2);
   tcase_add_test(tc1_1, s21_sprintf_n1);
-  //tcase_add_test(tc1_1, s21_sprintf_percent);
+  // tcase_add_test(tc1_1, s21_sprintf_percent);
 
   srunner_set_fork_status(sr, CK_NOFORK);
   srunner_run_all(sr, CK_ENV);
