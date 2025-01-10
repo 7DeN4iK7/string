@@ -424,8 +424,8 @@ START_TEST(s21_strcspn_1) {
   char s21_str2[3] = "edc";
   char str1[6] = "abcdef";
   char str2[3] = "edc";
-  size_t s21_res = s21_strcspn(s21_str1, s21_str2);
-  size_t res = strcspn(str1, str2);
+  s21_size_t s21_res = s21_strcspn(s21_str1, s21_str2);
+  s21_size_t res = strcspn(str1, str2);
   ck_assert_int_eq(s21_res, res);
 }
 END_TEST
@@ -451,8 +451,8 @@ END_TEST
 
 START_TEST(s21_strlen_1) {
   const char *str = "aaaaaa";
-  size_t s21_res = s21_strlen(str);
-  size_t res = strlen(str);
+  s21_size_t s21_res = s21_strlen(str);
+  s21_size_t res = strlen(str);
   ck_assert_int_eq(s21_res, res);
 }
 END_TEST
